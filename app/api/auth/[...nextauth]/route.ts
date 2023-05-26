@@ -5,11 +5,6 @@ import User from '@models/user';
 
 import { connectToDB } from '@utils/database';
 
-global.console.log({
-  clientId: process.env.GOOGLE_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-});
-
 const handler = NextAuth({
   providers: [
     GoogleProvider({
@@ -21,19 +16,15 @@ const handler = NextAuth({
     async session({ session }) {
       const sessionUser = await User.findOne({ email: session?.user?.email });
 
-      const newSession = {
-        ...session,
+      const updatedSessionUser = {
+        ...session?.user,
+        id: sessionUser._id.toString(),
       };
 
-      global.console.log('session user:', sessionUser);
-      global.console.log('session user before:', session.user);
-
-      newSession.user.id = sessionUser._id.toString();
-
-      global.console.log('session user after:', session.user);
-      global.console.log('session:', session);
-
-      return newSession;
+      return {
+        ...session,
+        user: updatedSessionUser,
+      };
     },
     async signIn({ profile }) {
       try {
