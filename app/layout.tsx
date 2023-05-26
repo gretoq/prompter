@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 
 import '@styles/gloabal.css';
+import Nav from '@components/Nav';
 
 export const metadata = {
   title: 'Prompter',
@@ -20,6 +21,7 @@ const RootLayout: React.FC<Props> = ({ children }) => {
         </div>
 
         <main className="app">
+          <Nav />
           {children}
         </main>
       </body>

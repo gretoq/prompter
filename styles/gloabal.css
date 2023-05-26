@@ -74,6 +74,14 @@
 /* Tailwind Styles */
 
 @layer components {
+  .font-satoshi {
+    font-family: "Satoshi", sans-serif;
+  }
+
+  .font-inter {
+    font-family: "Inter", sans-serif;
+  }
+
   .app {
     @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
   }
@@ -137,7 +145,7 @@
   }
 
   /* Nav Component */
-  .logo_text {
+    .logo_text {
     @apply max-sm:hidden font-satoshi font-semibold text-lg text-black tracking-wide;
   }
 
