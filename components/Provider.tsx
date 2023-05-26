@@ -3,7 +3,7 @@ import React from 'react';
 interface Props {}
 
 const Provider = () => {
-  return <div></div>;
+  return <div>Provider</div>;
 };
 
 export default Provider;
