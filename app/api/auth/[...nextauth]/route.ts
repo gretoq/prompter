@@ -21,16 +21,19 @@ const handler = NextAuth({
     async session({ session }) {
       const sessionUser = await User.findOne({ email: session?.user?.email });
 
+      const newSession = {
+        ...session,
+      };
+
       global.console.log('session user:', sessionUser);
       global.console.log('session user before:', session.user);
 
-      // @ts-expect-error
-      session?.user.id = sessionUser._id.toString();
+      newSession.user.id = sessionUser._id.toString();
 
       global.console.log('session user after:', session.user);
       global.console.log('session:', session);
 
-      return session;
+      return newSession;
     },
     async signIn({ profile }) {
       try {
