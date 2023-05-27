@@ -32,17 +32,13 @@ const handler = NextAuth({
 
         const userExists = await User.findOne({ email: profile?.email });
 
-        global.console.log('profile:', profile);
-        global.console.log('user exists:', userExists);
-
         if (!userExists) {
-          const createdUser = await User.create({
+          await User.create({
             email: profile?.email,
             username: profile?.name?.replace(' ', '').toLowerCase(),
             image: profile?.image,
           });
 
-          global.console.log('created User:', createdUser);
         }
 
         return true;
