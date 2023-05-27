@@ -13,7 +13,7 @@ import {
 } from 'next-auth/react';
 import { BuiltInProviderType } from 'next-auth/providers';
 
-interface Props {}
+// interface Props {}
 
 const Nav: React.FC = () => {
   const [providers, setProviders]
@@ -21,6 +21,7 @@ const Nav: React.FC = () => {
     LiteralUnion<BuiltInProviderType,string>,
     ClientSafeProvider> | null>(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
     const setProvider = async() => {
@@ -32,7 +33,7 @@ const Nav: React.FC = () => {
     setProvider();
   }, []);
 
-  const isUserLoggedIn = true;
+  const isUserLoggedIn = session?.user;
 
   return (
     <nav className="flex-between w-full mb-16 pt-3">
@@ -72,7 +73,7 @@ const Nav: React.FC = () => {
             <Link href="/profile">
               <Image
                 className="rounded-full"
-                src="/assets/images/logo.svg"
+                src={session?.user?.image || ''}
                 width={37}
                 height={37}
                 alt="profile"
@@ -103,7 +104,7 @@ const Nav: React.FC = () => {
           <div className="flex">
             <Image
               className="rounded-full"
-              src="/assets/images/logo.svg"
+              src={session?.user?.image || ''}
               width={37}
               height={37}
               alt="profile"
