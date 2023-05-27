@@ -2,11 +2,9 @@
 
 import React, { FormEvent, useState } from 'react';
 import { useSession } from 'next-auth/react';
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 import Form from '@components/Form';
-
-// interface Props {}
 
 export interface Post {
   prompt: string,
@@ -14,7 +12,7 @@ export interface Post {
 }
 
 const CreatePrompt: React.FC = () => {
-  // const router = useRouter();
+  const router = useRouter();
   const { data: session } = useSession();
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [post, setPost] = useState<Post>({
@@ -40,9 +38,9 @@ const CreatePrompt: React.FC = () => {
         },
       );
 
-      // if (response.ok) {
-      //   router.push('/');
-      // }
+      if (response.ok) {
+        router.push('/');
+      }
 
       global.console.log('response create new post:', response);
     } catch (error: any) {
