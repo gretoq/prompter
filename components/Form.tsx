@@ -2,7 +2,7 @@ import React, { Dispatch, FormEvent, SetStateAction } from 'react';
 
 import Link from 'next/link';
 
-import { Post } from '@app/create-prompt/page';
+import { Post } from '../types/Post';
 
 interface Props {
   type: string,
