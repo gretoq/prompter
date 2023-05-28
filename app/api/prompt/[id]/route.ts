@@ -12,8 +12,6 @@ export const GET = async(
   try {
     await connectToDB();
 
-    global.console.log('params:', params);
-
     const prompt = await Prompt
       .findById(params.id)
       .populate('creator');
@@ -44,44 +42,24 @@ export const PATCH = async(
   try {
     await connectToDB();
 
-    global.console.log('prompt and tag:', prompt, tag);
+    const existingPrompt = await Prompt.findById(params.id);
 
-    const updatedPrompt = await Prompt.findByIdAndUpdate(
-      params.id,
-      {
-        prompt,
-        tag,
-      },
-      { new: true },
-    );
+    if (!existingPrompt) {
+      return new Response(
+        'Prompt not found!',
+        { status: 404 },
+      );
+    }
+
+    existingPrompt.prompt = prompt;
+    existingPrompt.tag = tag;
+
+    await existingPrompt.save();
 
     return new Response(
-      JSON.stringify(updatedPrompt),
+      JSON.stringify(existingPrompt),
       { status: 200 },
     );
-
-    // global.console.log('updated prompt:', updatedPrompt);
-
-    // const existingPrompt = await Prompt.findById(params.id);
-
-    // global.console.log('existing prompt:', existingPrompt);
-
-    // if (!existingPrompt) {
-    //   return new Response(
-    //     'Prompt not found!',
-    //     { status: 404 },
-    //   );
-    // }
-
-    // existingPrompt.prompt = prompt;
-    // existingPrompt.tag = tag;
-
-    // await existingPrompt.save();
-
-    // return new Response(
-    //   JSON.stringify(existingPrompt),
-    //   { status: 200 },
-    // );
   } catch (error: any) {
     return new Response(
       'Failed to update a prompt!',

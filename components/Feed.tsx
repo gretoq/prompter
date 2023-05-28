@@ -4,8 +4,6 @@ import { Post } from '../types/Post';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import PromptCardList from './PromptCardList';
 
-// interface Props {}
-
 const Feed: React.FC = () => {
   const [searchText, setSearchText] = useState<string>('');
   const [posts, setPosts] = useState<Post[]>([]);

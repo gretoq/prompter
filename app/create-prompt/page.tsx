@@ -44,8 +44,6 @@ const CreatePrompt: React.FC = () => {
       if (response.ok) {
         router.push('/');
       }
-
-      global.console.log('response create new post:', response);
     } catch (error: any) {
       global.console.log('Error creating new post:', error.message);
     }
