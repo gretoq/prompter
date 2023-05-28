@@ -1,5 +1,3 @@
-'use client';
-
 import React, { ReactNode } from 'react';
 import '@styles/gloabal.css';
 import Nav from '@components/Nav';
