@@ -1,0 +1,112 @@
+import Prompt from '@models/prompt';
+import { connectToDB } from '@utils/database';
+
+interface Params {
+  id: string,
+}
+
+export const GET = async(
+  reqest: Request,
+  { params }: { params: Params },
+) => {
+  try {
+    await connectToDB();
+
+    global.console.log('params:', params);
+
+    const prompt = await Prompt
+      .findById(params.id)
+      .populate('creator');
+
+    if (!prompt) {
+      return new Response(
+        'Prompt not found',
+        { status: 404 },
+      );
+    }
+
+    return new Response(JSON.stringify(prompt), { status: 200 });
+
+  } catch (error: any) {
+    return new Response(
+      'Failed to fetch user`s prompt',
+      { status: 500 },
+    );
+  }
+};
+
+export const PATCH = async(
+  request: Request,
+  { params }: { params: Params },
+) => {
+  const { prompt, tag } = await request.json();
+
+  try {
+    await connectToDB();
+
+    global.console.log('prompt and tag:', prompt, tag);
+
+    const updatedPrompt = await Prompt.findByIdAndUpdate(
+      params.id,
+      {
+        prompt,
+        tag,
+      },
+      { new: true },
+    );
+
+    return new Response(
+      JSON.stringify(updatedPrompt),
+      { status: 200 },
+    );
+
+    // global.console.log('updated prompt:', updatedPrompt);
+
+    // const existingPrompt = await Prompt.findById(params.id);
+
+    // global.console.log('existing prompt:', existingPrompt);
+
+    // if (!existingPrompt) {
+    //   return new Response(
+    //     'Prompt not found!',
+    //     { status: 404 },
+    //   );
+    // }
+
+    // existingPrompt.prompt = prompt;
+    // existingPrompt.tag = tag;
+
+    // await existingPrompt.save();
+
+    // return new Response(
+    //   JSON.stringify(existingPrompt),
+    //   { status: 200 },
+    // );
+  } catch (error: any) {
+    return new Response(
+      'Failed to update a prompt!',
+      { status: 500 },
+    );
+  }
+};
+
+export const DELETE = async(
+  request: Request,
+  { params }: { params: Params },
+) => {
+  try {
+    await connectToDB();
+
+    await Prompt.findByIdAndRemove(params.id);
+
+    return new Response(
+      'Prompt deleted successfully!',
+      { status: 200 },
+    );
+  } catch (error: any) {
+    return new Response(
+      'Faild to remove a prompt!',
+      { status: 500 },
+    );
+  }
+};

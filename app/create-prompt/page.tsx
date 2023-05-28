@@ -5,17 +5,20 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 import Form from '@components/Form';
-
-export interface Post {
-  prompt: string,
-  tag: string,
-}
+import { Post } from '../../types/Post';
 
 const CreatePrompt: React.FC = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [post, setPost] = useState<Post>({
+    _id: '',
+    creator: {
+      _id: '',
+      username: '',
+      image: '',
+      email: '',
+    },
     prompt: '',
     tag: '',
   });

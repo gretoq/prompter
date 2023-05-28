@@ -25,6 +25,7 @@ const RootLayout: React.FC<Props> = ({ children }) => {
           </div>
           <main className="app">
             <Nav />
+
             {children}
           </main>
         </Provider>
