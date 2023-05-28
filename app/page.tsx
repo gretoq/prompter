@@ -8,9 +8,9 @@ const Home: React.FC = () => {
         Discover & Share
       </h1>
 
-      <br className="max-md:hidden" />
+      {/* <br className="max-md:hidden" /> */}
 
-      <span className="orange_gradient text-center">
+      <span className="head_text orange_gradient text-center m-0">
         AI-Powered Prompts
       </span>
 
