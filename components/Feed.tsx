@@ -16,6 +16,7 @@ const Feed: React.FC = () => {
     const response = await fetch(
       '/api/prompt',
       {
+        cache: 'no-cache',
         headers: {
           'Cache-Control': 'no-cache',
         },
