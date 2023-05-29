@@ -4,7 +4,9 @@
       "src": "/api/prompt",
       "methods": ["GET"],
       "dest": "/api/prompt",
-      "revalidate": false
+      "headers": {
+        "Cache-Control": "no-store"
+      }
     }
   ]
 }
