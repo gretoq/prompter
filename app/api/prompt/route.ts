@@ -9,7 +9,13 @@ export const GET = async(request: Request) => {
       .find({})
       .populate('creator');
 
-    return new Response(JSON.stringify(prompts), { status: 200 });
+    const response = new Response(JSON.stringify(prompts), {
+      status: 200,
+    });
+
+    response.headers.set('Cache-Control', 'no-cache');
+
+    return response;
   } catch (error: any) {
     return new Response(
       'Failed to fetch all prompts!',

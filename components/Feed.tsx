@@ -13,15 +13,7 @@ const Feed: React.FC = () => {
   };
 
   const fetchPosts = async() => {
-    const response = await fetch(
-      '/api/prompt',
-      {
-        cache: 'no-cache',
-        headers: {
-          'Cache-Control': 'no-cache',
-        },
-      }
-    );
+    const response = await fetch('/api/prompt');
     const data = await response.json();
 
     setPosts(data);
