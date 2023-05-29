@@ -14,7 +14,6 @@ export const GET = async(reqest: Request, { params }: { params: Params}) => {
       .populate('creator');
 
     return new Response(JSON.stringify(prompts), { status: 200 });
-
   } catch (error: any) {
     return new Response(
       'Failed to fetch prompts for selected user',

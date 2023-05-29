@@ -1,0 +1,12 @@
+{
+  "routes": [
+    {
+      "src": "/api/prompt",
+      "methods": ["GET"],
+      "dest": "/api/prompt",
+      "headers": {
+        "Cache-Control": "no-store"
+      }
+    }
+  ]
+}
