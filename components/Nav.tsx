@@ -13,8 +13,6 @@ import {
 } from 'next-auth/react';
 import { BuiltInProviderType } from 'next-auth/providers';
 
-// interface Props {}
-
 const Nav: React.FC = () => {
   const [providers, setProviders]
     = useState<Record<

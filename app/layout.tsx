@@ -21,6 +21,7 @@ const RootLayout: React.FC<Props> = ({ children }) => {
           <div className="main">
             <div className="gradient"></div>
           </div>
+
           <main className="app">
             <Nav />
 

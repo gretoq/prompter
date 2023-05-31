@@ -1,6 +1,7 @@
 import Prompt from '@models/prompt';
 import { connectToDB } from '@utils/database';
 
+// eslint-disable-next-line no-unused-vars
 export const GET = async(request: Request) => {
   try {
     await connectToDB();
@@ -12,8 +13,6 @@ export const GET = async(request: Request) => {
     const response = new Response(JSON.stringify(prompts), {
       status: 200,
     });
-
-    response.headers.set('Cache-Control', 'no-cache');
 
     return response;
   } catch (error: any) {
