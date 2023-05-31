@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react';
 import '@styles/gloabal.css';
 import Nav from '@components/Nav';
 import Provider from '@components/Provider';
-import { Session } from 'next-auth';
 
 export const metadata = {
   title: 'Prompter',
@@ -11,15 +10,14 @@ export const metadata = {
 
 interface Props {
   children: ReactNode,
-  session: Session | null
 }
 
-const RootLayout: React.FC<Props> = ({ children, session }) => {
+const RootLayout: React.FC<Props> = ({ children }) => {
 
   return (
     <html lang="en">
       <body>
-        <Provider session={session}>
+        <Provider>
           <div className="main">
             <div className="gradient"></div>
           </div>
