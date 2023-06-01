@@ -32,8 +32,6 @@ const PromptCard: React.FC<Props> = ({
     }, 3000);
   };
 
-  window.console.log('user image:', post?.creator?.image);
-
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-5">

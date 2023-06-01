@@ -15,21 +15,6 @@ const nextConfig = {
 
     return config;
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/prompt',
-        destination: '/api/prompt',
-        has: [
-          {
-            type: 'query',
-            key: 'no-isr',
-            value: 'true',
-          },
-        ],
-      },
-    ];
-  },
 };
 
 module.exports = nextConfig;
