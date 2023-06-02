@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -13,6 +12,9 @@ module.exports = {
       },
       colors: {
         'primary-orange': '#FF5722',
+      },
+      transitionDuration: {
+        '500': '500ms',
       },
     },
   },

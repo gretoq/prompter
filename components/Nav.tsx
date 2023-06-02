@@ -18,6 +18,7 @@ const Nav: React.FC = () => {
     = useState<Record<
     LiteralUnion<BuiltInProviderType,string>,
     ClientSafeProvider> | null>(null);
+
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const { data: session } = useSession();
 
@@ -81,16 +82,18 @@ const Nav: React.FC = () => {
         ) : (
           <>
             {providers && (
-              Object.values(providers).map(({ name, id }) => (
-                <button
-                  className="black_btn"
-                  type="button"
-                  key={name}
-                  onClick={() => signIn(id)}
-                >
-                  Sign In
-                </button>
-              ))
+              <div  className="flex gap-8">
+                {Object.values(providers).map(({ name, id }) => (
+                  <button
+                    className="black_btn"
+                    type="button"
+                    key={name}
+                    onClick={() => signIn(id)}
+                  >
+                    Sign In {name}
+                  </button>
+                ))}
+              </div>
             )}
           </>
         )}

@@ -9,5 +9,6 @@ declare module 'next-auth' {
 
   export interface Profile extends DefaultProfile {
     picture?: string;
+    avatar_url?: string;
   }
 }

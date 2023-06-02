@@ -5,25 +5,29 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import PromptCardList from './PromptCardList';
 
 const Feed: React.FC = () => {
-  const [searchText, setSearchText] = useState<string>('');
   const [posts, setPosts] = useState<Post[]>([]);
+  const [searchText, setSearchText] = useState<string>('');
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
   };
 
-  const fetchPosts = async() => {
-    const response = await fetch(
-      '/api/prompt',
-    );
-    const data = await response.json();
-
-    setPosts(data);
-  };
-
   useEffect(() => {
+    const fetchPosts = async() => {
+      const response = await fetch(
+        '/api/prompt',
+      );
+      const data = await response.json();
+
+      setPosts(data);
+    };
+
     fetchPosts();
   }, []);
+
+  const filteredPosts = posts.filter(({ prompt, tag }) => {
+    return prompt.includes(searchText) || tag.includes(searchText);
+  });
 
   return (
     <section className="feed">
@@ -39,7 +43,7 @@ const Feed: React.FC = () => {
       </form>
 
       <PromptCardList
-        posts={posts}
+        posts={filteredPosts}
         handleTagClick={() => {}}
       />
     </section>
