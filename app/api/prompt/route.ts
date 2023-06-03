@@ -1,12 +1,10 @@
 import Prompt from '@models/prompt';
 // import { Post } from '../../../types/Post';
 import { connectToDB } from '@utils/database';
-import { NextApiRequest } from 'next';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async (
-  request: NextApiRequest,
-  // response: NextApiResponse<Post[]>,
+  request: NextRequest,
 ) => {
   try {
     await connectToDB();
