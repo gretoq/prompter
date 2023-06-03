@@ -13,14 +13,9 @@ export const GET = async (
       .find({})
       .populate('creator');
 
-    // global.console.log('prompts', prompts);
+    return new Response(JSON.stringify(prompts), { status: 200 });
 
-    // response.setHeader('Cache-Control', 'no-store');
-    // response.setHeader
-
-    // return response.status(200).json(prompts);
-
-    return NextResponse.json(prompts);
+    // return NextResponse.json(prompts);
   } catch (error: any) {
     global.console.log('Failed to fetch data!', error.message);
     // throw new Error ('Failed to fetch data!');
