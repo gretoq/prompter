@@ -1,11 +1,8 @@
 import Prompt from '@models/prompt';
-// import { Post } from '../../../types/Post';
 import { connectToDB } from '@utils/database';
-import { NextRequest, NextResponse } from 'next/server';
 
-export const GET = async (
-  request: NextRequest,
-) => {
+// eslint-disable-next-line no-unused-vars
+export const GET = async(request: Request) => {
   try {
     await connectToDB();
 
@@ -13,11 +10,15 @@ export const GET = async (
       .find({})
       .populate('creator');
 
-    return new Response(JSON.stringify(prompts), { status: 200 });
+    const response = new Response(JSON.stringify(prompts), {
+      status: 200,
+    });
 
-    // return NextResponse.json(prompts);
+    return response;
   } catch (error: any) {
-    global.console.log('Failed to fetch data!', error.message);
-    // throw new Error ('Failed to fetch data!');
+    return new Response(
+      'Failed to fetch all prompts!',
+      { status: 500 },
+    );
   }
 };
