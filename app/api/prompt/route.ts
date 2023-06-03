@@ -1,7 +1,13 @@
 import Prompt from '@models/prompt';
+// import { Post } from '../../../types/Post';
 import { connectToDB } from '@utils/database';
+import { NextApiRequest } from 'next';
+import { NextResponse } from 'next/server';
 
-export const GET = async(request: Request) => {
+export const GET = async (
+  request: NextApiRequest,
+  // response: NextApiResponse<Post[]>,
+) => {
   try {
     await connectToDB();
 
@@ -9,15 +15,16 @@ export const GET = async(request: Request) => {
       .find({})
       .populate('creator');
 
-    const response = new Response(JSON.stringify(prompts), {
-      status: 200,
-    });
+    // global.console.log('prompts', prompts);
 
-    return response;
+    // response.setHeader('Cache-Control', 'no-store');
+    // response.setHeader
+
+    // return response.status(200).json(prompts);
+
+    return NextResponse.json(prompts);
   } catch (error: any) {
-    return new Response(
-      'Failed to fetch all prompts!',
-      { status: 500 },
-    );
+    global.console.log('Failed to fetch data!', error.message);
+    // throw new Error ('Failed to fetch data!');
   }
 };

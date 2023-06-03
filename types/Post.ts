@@ -5,4 +5,5 @@ export interface Post {
   creator: User,
   prompt: string,
   tag: string,
+  __v: 0,
 }
