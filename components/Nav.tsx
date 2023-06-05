@@ -12,12 +12,15 @@ import {
   ClientSafeProvider,
 } from 'next-auth/react';
 import { BuiltInProviderType } from 'next-auth/providers';
+import { useRouter } from 'next/navigation';
 
 const Nav: React.FC = () => {
   const [providers, setProviders]
     = useState<Record<
     LiteralUnion<BuiltInProviderType,string>,
     ClientSafeProvider> | null>(null);
+
+  const router = useRouter();
 
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const { data: session } = useSession();
@@ -88,7 +91,10 @@ const Nav: React.FC = () => {
                     className="black_btn"
                     type="button"
                     key={name}
-                    onClick={() => signIn(id)}
+                    onClick={async() => {
+                      await signIn(id);
+                      router.push('/');
+                    }}
                   >
                     Sign In {name}
                   </button>
