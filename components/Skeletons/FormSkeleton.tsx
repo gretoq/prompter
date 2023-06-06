@@ -1,83 +1,66 @@
-'use client';
-
-import React, { useCallback, useState } from 'react';
-import Link from 'next/link';
+import React from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 interface Props {
   type: string,
 }
 
-const Form: React.FC<Props> = ({ type }) => {
-  return (
-    <section className="w-full max-w-full flex-start flex-col">
-      <h1 className='head_text text-left'>
-        <span className="blue_gradient">
-          {`${type} Post`}
+const FormSkeleton: React.FC<Props> = ({ type }) => (
+  <section className="w-full max-w-full flex-start flex-col">
+    <h1 className='head_text text-left'>
+      <span className="blue_gradient">
+        {`${type} Post`}
+      </span>
+    </h1>
+
+    <p className="desc text-left max-w-md">
+      {
+        `${type} and share amaizing prompts with the world,
+        and let your imagination run wild with any AI-powered platform.`
+      }
+    </p>
+
+    <form
+      className="mt-10 w-full max-2xl flex flex-col gap-7 glassmorphism"
+    >
+      <label>
+        <span className="font-satoshi font-semibold text-base text-gray-700">
+          Your AI Prompt
         </span>
-      </h1>
 
-      <p className="desc text-left max-w-md">
-        {
-          `${type} and share amaizing prompts with the world,
-          and let your imagination run wild with any AI-powered platform.`
-        }
-      </p>
+        <Skeleton className='form_textarea' />
+      </label>
 
-      <form
-        // onSubmit={handlerSubmit}
-        className="mt-10 w-full max-2xl flex flex-col gap-7 glassmorphism"
-      >
-        <label>
-          <span className="font-satoshi font-semibold text-base text-gray-700">
-            Your AI Prompt
+      <label>
+        <span className="font-satoshi font-semibold text-base text-gray-700">
+          Tag {' '}
+
+          <span className="font-normal">
+            (#products, #webdevelopment, #idea)
           </span>
+        </span>
 
-          <textarea
-            className="form_textarea"
-            // value={promptValue}
-            // onChange={handlerPrompt}
-            placeholder="Write your prompt here..."
-            required
-          />
-        </label>
+        <Skeleton className='form_input' />
+      </label>
 
-        <label>
-          <span className="font-satoshi font-semibold text-base text-gray-700">
-            Tag {' '}
+      <div className="flex-end mx-3 mb-5 gap-4">
+        <button
+          className="text-gray-500 text-sm"
+          aria-disabled
+        >
+          Cancel
+        </button>
 
-            <span className="font-normal">
-              (#products, #webdevelopment, #idea)
-            </span>
-          </span>
+        <button
+          className="px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white"
+          type="submit"
+          disabled
+        >
+          {type}
+        </button>
+      </div>
+    </form>
+  </section>
+);
 
-          <input
-            className="form_input"
-            // value={tagValue}
-            // onChange={handlerTag}
-            placeholder="#tag..."
-            required
-          />
-        </label>
-
-        <div className="flex-end mx-3 mb-5 gap-4">
-          <Link
-            href="/"
-            className="text-gray-500 text-sm"
-          >
-            Cancel
-          </Link>
-
-          <button
-            className="px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white"
-            type="submit"
-            // disabled={submitting}
-          >
-            {type}
-          </button>
-        </div>
-      </form>
-    </section>
-  );
-};
-
-export default Form;
+export default FormSkeleton;

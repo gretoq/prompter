@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import '@styles/gloabal.css';
 import Nav from '@components/Nav';
 import Provider from '@components/Provider';
