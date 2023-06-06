@@ -13,7 +13,7 @@ const Feed: React.FC = () => {
     error,
     isValidating,
   } = useSWR('/api/prompt', async(url) => {
-    const response = await fetch(url, { cache: 'no-cache' });
+    const response = await fetch(url, { cache: 'reload' });
     const data: Post[] = await response.json();
     return data;
   });
