@@ -2,16 +2,15 @@
 
 import React, { ReactNode } from 'react';
 import { SessionProvider } from 'next-auth/react';
-import { Session } from 'next-auth';
+// import { Session } from 'next-auth';
 
 interface Props {
   children: ReactNode,
-  session?: Session,
 }
 
-const Provider: React.FC<Props> = ({ children, session }) => {
+const Provider: React.FC<Props> = ({ children }) => {
   return (
-    <SessionProvider session={session}>
+    <SessionProvider> {/* session={session} */}
       {children}
     </SessionProvider>
   );

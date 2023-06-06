@@ -5,56 +5,9 @@ import Link from 'next/link';
 
 interface Props {
   type: string,
-  prompt?: string,
-  tag?: string,
-  submitting: boolean,
-  onSubmit: (
-    prompt: string,
-    tag: string,
-  ) => Promise<void>,
 }
 
-const Form: React.FC<Props> = ({
-  type,
-  prompt = '',
-  tag = '',
-  submitting,
-  onSubmit,
-}) => {
-  const [promptValue, setPromptValue] = useState<string>(prompt);
-  const [tagValue, setTagValue] = useState<string>(tag);
-
-  const handlerPrompt = useCallback((
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const text = event.target.value;
-
-    setPromptValue(text);
-  }, []);
-
-  const handlerTag = useCallback((
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const text = event.target.value;
-
-    setTagValue(text);
-  }, []);
-
-  const handlerSubmit = useCallback(async(
-    event: React.FormEvent<HTMLFormElement>,
-  ) => {
-    event.preventDefault();
-
-    if (promptValue === prompt && tagValue === tag) {
-      alert('You haven`t no changes!');
-
-      return;
-    }
-
-    await onSubmit(promptValue, tagValue);
-
-  }, [promptValue, tagValue, prompt, tag, onSubmit]);
-
+const Form: React.FC<Props> = ({ type }) => {
   return (
     <section className="w-full max-w-full flex-start flex-col">
       <h1 className='head_text text-left'>
@@ -71,7 +24,7 @@ const Form: React.FC<Props> = ({
       </p>
 
       <form
-        onSubmit={handlerSubmit}
+        // onSubmit={handlerSubmit}
         className="mt-10 w-full max-2xl flex flex-col gap-7 glassmorphism"
       >
         <label>
@@ -81,8 +34,8 @@ const Form: React.FC<Props> = ({
 
           <textarea
             className="form_textarea"
-            value={promptValue}
-            onChange={handlerPrompt}
+            // value={promptValue}
+            // onChange={handlerPrompt}
             placeholder="Write your prompt here..."
             required
           />
@@ -99,8 +52,8 @@ const Form: React.FC<Props> = ({
 
           <input
             className="form_input"
-            value={tagValue}
-            onChange={handlerTag}
+            // value={tagValue}
+            // onChange={handlerTag}
             placeholder="#tag..."
             required
           />
@@ -117,13 +70,9 @@ const Form: React.FC<Props> = ({
           <button
             className="px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white"
             type="submit"
-            disabled={submitting}
+            // disabled={submitting}
           >
-            {submitting ? (
-              `${type}...`
-            ) : (
-              type
-            )}
+            {type}
           </button>
         </div>
       </form>

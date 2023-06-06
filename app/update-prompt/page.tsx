@@ -1,45 +1,45 @@
 'use client';
 
-import React, { FormEvent, useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
+import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+
+import useSWR from 'swr';
 
 import Form from '@components/Form';
 import { Post } from '../../types/Post';
+import FormSkeleton from '@components/Skeletons/FormSkeleton';
 
 const EditPrompt: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const promptId = searchParams.get('id');
   const [submitting, setSubmitting] = useState<boolean>(false);
-  const [post, setPost] = useState<Post>({
-    _id: '',
-    creator: {
-      _id: '',
-      username: '',
-      image: '',
-      email: '',
-    },
-    prompt: '',
-    tag: '',
+  const { data: post, error, isValidating } = useSWR(`/api/prompt/${promptId}`, async (url) => {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
   });
 
-  useEffect(() => {
-    const getPromptDetails = async() => {
-      const response = await fetch(`/api/prompt/${promptId}`);
-      const data = await response.json();
+  // const [post, setPost] = useState<Post | null>(null);
 
-      setPost(data);
-    };
+  // useEffect(() => {
+  //   const getPromptDetails = async() => {
+  //     try {
+  //       const response = await fetch(`/api/prompt/${promptId}`);
+  //       const data = await response.json();
 
-    if (promptId) {
-      getPromptDetails();
-    }
-  }, [promptId]);
+  //       setPost(data);
+  //     } catch (error: any) {
+  //       global.console.log('error:', error.message);
+  //     }
+  //   };
 
-  const updatePrompt = async(event: FormEvent) => {
-    event.preventDefault();
+  //   if (promptId) {
+  //     getPromptDetails();
+  //   }
+  // }, [promptId]);
 
+  const updatePrompt = async(prompt: string, tag: string) => {
     setSubmitting(true);
 
     if (!promptId) {
@@ -52,8 +52,8 @@ const EditPrompt: React.FC = () => {
         {
           method: 'PATCH',
           body: JSON.stringify({
-            prompt: post.prompt,
-            tag: post.tag,
+            prompt,
+            tag,
           }),
         }
       );
@@ -63,18 +63,30 @@ const EditPrompt: React.FC = () => {
       }
 
     } catch (error: any) {
-
+      global.console.log('Failed to update prompt!', error.message);
     }
   };
 
   return (
-    <Form
-      type="Edit"
-      post={post}
-      setPost={setPost}
-      submitting={submitting}
-      onSubmit={updatePrompt}
-    />
+    <>
+      {post && (
+        <Form
+          type="Edit"
+          prompt={post?.prompt}
+          tag={post?.tag}
+          submitting={submitting}
+          onSubmit={updatePrompt}
+        />
+      )}
+
+      {/* {true && (
+        // <FormSkeleton />
+      )} */}
+
+      {error && (
+        <p>Here must be in future Error page</p>
+      )}
+    </>
   );
 };
 

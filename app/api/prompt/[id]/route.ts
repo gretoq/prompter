@@ -6,15 +6,13 @@ interface Params {
 }
 
 export const GET = async(
-  reqest: Request,
+  req: Request,
   { params }: { params: Params },
 ) => {
   try {
     await connectToDB();
 
-    const prompt = await Prompt
-      .findById(params.id)
-      .populate('creator');
+    const prompt = await Prompt.findById(params.id).populate('creator');
 
     if (!prompt) {
       return new Response(
@@ -34,10 +32,10 @@ export const GET = async(
 };
 
 export const PATCH = async(
-  request: Request,
+  req: Request,
   { params }: { params: Params },
 ) => {
-  const { prompt, tag } = await request.json();
+  const { prompt, tag } = await req.json();
 
   try {
     await connectToDB();
@@ -69,7 +67,7 @@ export const PATCH = async(
 };
 
 export const DELETE = async(
-  request: Request,
+  req: Request,
   { params }: { params: Params },
 ) => {
   try {

@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { SkeletonTheme } from 'react-loading-skeleton';
 import '@styles/gloabal.css';
 import Nav from '@components/Nav';
 import Provider from '@components/Provider';
@@ -25,7 +26,9 @@ const RootLayout: React.FC<Props> = ({ children }) => {
           <main className="app">
             <Nav />
 
-            {children}
+            <SkeletonTheme baseColor="#202020" highlightColor="#444">
+              {children}
+            </SkeletonTheme>
           </main>
         </Provider>
       </body>

@@ -32,26 +32,26 @@ const handler = NextAuth({
       };
     },
     async signIn({ profile }) {
-      global.console.log('profile:', profile);
+      if (!profile) {
+        return false;
+      }
 
       try {
         await connectToDB();
 
-        const userExists = await User.findOne({ email: profile?.email });
+        const userExists = await User.findOne({ email: profile.email });
 
         if (!userExists) {
           await User.create({
-            email: profile?.email,
-            username: profile?.name,
-            image: profile?.picture || profile?.avatar_url,
+            email: profile.email,
+            username: profile.name,
+            image: profile.picture || profile.avatar_url,
           });
 
         }
 
         return true;
       } catch (error: any) {
-        global.console.log('Error checking if user exists: ', error.message);
-
         return false;
       }
     },
