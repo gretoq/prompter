@@ -16,6 +16,7 @@ const Feed: React.FC = () => {
     const fetchPosts = async() => {
       const response = await fetch(
         '/api/prompt',
+        { next: { revalidate: 10 }},
       );
       const data = await response.json();
 
