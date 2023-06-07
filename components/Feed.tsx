@@ -12,7 +12,7 @@ const Feed: React.FC = () => {
     error,
     isValidating,
   } = useSWR('/api/prompt', async(url) => {
-    const response = await fetch(url);
+    const response = await fetch(url, { next: { revalidate: 10 }});
     const data: Post[] = await response.json();
 
     return data;
