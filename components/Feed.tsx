@@ -2,19 +2,19 @@
 
 import useSWR from 'swr';
 import { Post } from '../types/Post';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import PromptCardList from './PromptCardList';
-import PromptCardSkeleton from './Skeletons/PromptCardSkeleton';
+import PromptCardListSkeleton from './Skeletons/PromptCardListSkeleton';
 
 const Feed: React.FC = () => {
-  // const [posts, setPosts] = useState<Post[]>([]);
   const {
     data: posts = [],
     error,
     isValidating,
   } = useSWR('/api/prompt', async(url) => {
-    const response = await fetch(url, { cache: 'reload' });
+    const response = await fetch(url);
     const data: Post[] = await response.json();
+
     return data;
   });
 
@@ -23,20 +23,6 @@ const Feed: React.FC = () => {
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
   };
-
-  // useEffect(() => {
-  //   const fetchPosts = async() => {
-  //     const response = await fetch(
-  //       '/api/prompt',
-  //       { next: { revalidate: 10 }},
-  //     );
-  //     const data = await response.json();
-
-  //     setPosts(data);
-  //   };
-
-  //   fetchPosts();
-  // }, []);
 
   const filteredPosts = posts?.filter(({ prompt, tag }) => {
     return prompt.includes(searchText) || tag.includes(searchText);
@@ -56,11 +42,7 @@ const Feed: React.FC = () => {
       </form>
 
       {isValidating && (
-        <div className="mt-16 prompt_layout">
-          {[1, 2, 3, 4, 5, 6].map(element => (
-            <PromptCardSkeleton key={element} />
-          ))}
-        </div>
+        <PromptCardListSkeleton />
       )}
 
       {posts && (
