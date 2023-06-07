@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  revalidate: false,
   experimental: {
-    // isrMemoryCacheSize: 0,
     appDir: true,
     serverComponentsExternalPackages: ['mongoose'],
   },
