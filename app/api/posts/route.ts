@@ -41,12 +41,12 @@ export const GET = async(request: Request) => {
       { status: 200 },
     );
 
-    const url = new URL(request.url);
-    url.searchParams.set('t', `${Date.now()}`);
+    // const url = new URL(request.url);
+    // url.searchParams.set('t', `${Date.now()}`);
     response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
     response.headers.set('Pragma', 'no-cache');
     response.headers.set('Expires', '0');
-    response.headers.set('Location', url.toString());
+    // response.headers.set('Location', url.toString());
 
     global.console.log('request:', request);
 
