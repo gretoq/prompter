@@ -11,9 +11,9 @@ import FormSkeleton from '@components/Skeletons/FormSkeleton';
 const EditPrompt: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const promptId = searchParams.get('id');
+  const postId = searchParams.get('id');
   const [submitting, setSubmitting] = useState<boolean>(false);
-  const { data: post, error, isValidating } = useSWR(`/api/prompt/${promptId}`, async (url) => {
+  const { data: post, error, isValidating } = useSWR(`/api/posts/${postId}`, async (url) => {
     const response = await fetch(url);
     const data = await response.json();
     return data;
@@ -22,13 +22,13 @@ const EditPrompt: React.FC = () => {
   const updatePrompt = async(prompt: string, tag: string) => {
     setSubmitting(true);
 
-    if (!promptId) {
+    if (!postId) {
       return alert('Prompt ID not found!');
     }
 
     try {
       const response = await fetch(
-        `/api/prompt/${promptId}`,
+        `/api/prompt/${postId}`,
         {
           method: 'PATCH',
           body: JSON.stringify({
@@ -43,7 +43,7 @@ const EditPrompt: React.FC = () => {
       }
 
     } catch (error: any) {
-      global.console.log('Failed to update prompt!', error.message);
+      global.console.log('Failed to update a post!', error.message);
     }
   };
 

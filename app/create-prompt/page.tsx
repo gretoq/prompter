@@ -19,7 +19,7 @@ const CreatePrompt: React.FC = () => {
 
     try {
       const response: Response = await fetch(
-        '/api/prompt/new',
+        '/api/posts/new',
         {
           method: 'POST',
           body: JSON.stringify({
