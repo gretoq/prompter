@@ -1,4 +1,4 @@
-import Prompt from '@models/prompt';
+import Prompt from '@models/post';
 import { connectToDB } from '@utils/database';
 
 interface Params {
