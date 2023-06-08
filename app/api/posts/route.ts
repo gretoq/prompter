@@ -13,7 +13,13 @@ export const GET = async(request: Request) => {
 
     const response = new Response(
       JSON.stringify(posts),
-      { status: 200 },
+      {
+        status: 200,
+        headers: {
+          'Cache-Control': 'private',
+          'Content-Type': 'application/json',
+        },
+      },
     );
 
     return response;
