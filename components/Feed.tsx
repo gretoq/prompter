@@ -14,7 +14,6 @@ const Feed: React.FC = () => {
   } = useSWR('/api/posts', async(url) => {
     const response = await fetch(url, {
       next: { revalidate: 10 },
-      cache: 'no-store',
     });
     const data: Post[] = await response.json();
 
