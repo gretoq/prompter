@@ -28,7 +28,7 @@ const Feed: React.FC = () => {
     setSearchText(event.target.value);
   };
 
-  const filteredPosts = posts.filter(({ prompt, tag }) => {
+  const filteredPosts = posts?.filter(({ prompt, tag }) => {
     return prompt.includes(searchText) || tag.includes(searchText);
   });
 
