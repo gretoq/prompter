@@ -11,10 +11,9 @@ import PromptCardListSkeleton from '@components/Skeletons/PromptCardListSkeleton
 const ProfilePage: React.FC = () => {
   const { data: session } = useSession();
   const router = useRouter();
-  // const [posts, setPosts] = useState<Post[]>([]);
 
   const {
-    data: posts = [],
+    data = [],
     error,
     isValidating,
   } = useSWR(
@@ -26,6 +25,7 @@ const ProfilePage: React.FC = () => {
       return data;
     }
   );
+  const [posts, setPosts] = useState<Post[]>(data);
 
   // useEffect(() => {
   //   const fetchPosts = async() => {
@@ -56,17 +56,17 @@ const ProfilePage: React.FC = () => {
 
     try {
       await fetch(
-        `/api/prompt/${post._id}`,
+        `/api/posts/${post._id}`,
         { method: 'DELETE' }
       );
 
-      // setPosts(prev => {
-      //   const filteredPosts = prev.filter(prevPost => post._id !== prevPost._id);
+      setPosts(prev => {
+        const filteredPosts = prev.filter(prevPost => post._id !== prevPost._id);
 
-      //   return filteredPosts;
-      // });
+        return filteredPosts;
+      });
 
-      router.push('/profile');
+      // router.push('/profile');
     } catch (error: any) {
       global.console.log('Faild to remove a prompt: ', error.message);
     }
