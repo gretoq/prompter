@@ -16,7 +16,7 @@ export const GET = async(request: Request) => {
       {
         status: 200,
         headers: {
-          'Cache-Control': 'private',
+          'Cache-Control': 'no-store',
           'Content-Type': 'application/json',
         },
       },
