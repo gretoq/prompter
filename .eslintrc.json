@@ -3,7 +3,7 @@
   "rules": {
     "indent": ["error", 2],
     "no-console": "error",
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "no-undef": "error",
