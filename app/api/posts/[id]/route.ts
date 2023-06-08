@@ -22,7 +22,6 @@ export const GET = async(
     }
 
     return new Response(JSON.stringify(prompt), { status: 200 });
-
   } catch (error: any) {
     return new Response(
       'Failed to fetch user`s prompt',
