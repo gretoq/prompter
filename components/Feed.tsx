@@ -8,7 +8,7 @@ import PromptCardList from './PromptCardList';
 
 const Feed = () => {
   const {
-    data: posts = [],
+    data = [],
     error,
     isValidating,
   } = useSWR('/api/posts', async(url) => {
@@ -18,13 +18,15 @@ const Feed = () => {
     return data;
   });
 
+  const [posts, setPosts] = useState<Post[]>(data);
+
   const [searchText, setSearchText] = useState<string>('');
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
   };
 
-  const filteredPosts = posts?.filter(({ prompt, tag }) => {
+  const filteredPosts = posts.filter(({ prompt, tag }) => {
     return prompt.includes(searchText) || tag.includes(searchText);
   });
 
