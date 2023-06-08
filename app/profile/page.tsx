@@ -13,7 +13,7 @@ const ProfilePage: React.FC = () => {
   const router = useRouter();
 
   const {
-    data = [],
+    data: posts = [],
     error,
     isValidating,
   } = useSWR(
@@ -25,7 +25,7 @@ const ProfilePage: React.FC = () => {
       return data;
     }
   );
-  const [posts, setPosts] = useState<Post[]>(data);
+  // const [posts, setPosts] = useState<Post[]>(data);
 
   // useEffect(() => {
   //   const fetchPosts = async() => {
@@ -60,13 +60,13 @@ const ProfilePage: React.FC = () => {
         { method: 'DELETE' }
       );
 
-      setPosts(prev => {
-        const filteredPosts = prev.filter(prevPost => post._id !== prevPost._id);
+      // setPosts(prev => {
+      //   const filteredPosts = prev.filter(prevPost => post._id !== prevPost._id);
 
-        return filteredPosts;
-      });
+      //   return filteredPosts;
+      // });
 
-      // router.push('/profile');
+      router.push('/profile');
     } catch (error: any) {
       global.console.log('Faild to remove a prompt: ', error.message);
     }
