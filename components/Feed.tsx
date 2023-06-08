@@ -12,7 +12,9 @@ const Feed: React.FC = () => {
     error,
     isValidating,
   } = useSWR('/api/posts', async(url) => {
-    const response = await fetch(url, { cache: 'no-cache' });
+    const response = await fetch(url, {
+      cache: 'no-store',
+    });
     const data: Post[] = await response.json();
 
     return data;

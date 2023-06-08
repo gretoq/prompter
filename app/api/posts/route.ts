@@ -22,6 +22,8 @@ export const GET = async(request: Request) => {
       },
     );
 
+    global.console.log('request:', request);
+
     return response;
   } catch (error: any) {
     return new Response(
