@@ -12,14 +12,10 @@ export const connectToDB = async() => {
   }
 
   try {
-    await mongoose.connect(`${process.env.MONGODB_URI}`, {
-      dbName: 'share_prompt',
-      autoIndex: false, // Disable automatic index building
-      maxPoolSize: 10, // Limit the number of socket connections
-      serverSelectionTimeoutMS: 5000, // Retry sending operations for 5 seconds
-      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-      family: 4, // Use IPv4, skip trying IPv6
-    });
+    await mongoose.connect(
+      `${process.env.MONGODB_URI}`,
+      { dbName: 'share_prompt' },
+    );
 
     isConnected = true;
 
