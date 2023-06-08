@@ -6,7 +6,7 @@ import React, { ChangeEvent, useState } from 'react';
 import PromptCardListSkeleton from './Skeletons/PromptCardListSkeleton';
 import PromptCardList from './PromptCardList';
 
-const Feed = () => {
+const Feed: React.FC = () => {
   const {
     data = [],
     error,

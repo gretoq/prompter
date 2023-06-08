@@ -5,6 +5,8 @@ export const GET = async(request: Request) => {
   try {
     await connectToDB();
 
+    global.console.log('request:', request);
+
     const posts = await Prompt
       .find({})
       .populate('creator');
