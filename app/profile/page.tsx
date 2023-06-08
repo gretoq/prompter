@@ -66,7 +66,7 @@ const ProfilePage: React.FC = () => {
       //   return filteredPosts;
       // });
 
-      router.push('/profile');
+      // router.push('/profile');
     } catch (error: any) {
       global.console.log('Faild to remove a prompt: ', error.message);
     }
