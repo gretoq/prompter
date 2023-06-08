@@ -8,7 +8,7 @@ import PromptCardList from './PromptCardList';
 
 const Feed: React.FC = () => {
   const {
-    data = [],
+    data: posts = [],
     error,
     isValidating,
   } = useSWR('/api/posts', async(url) => {
@@ -19,8 +19,6 @@ const Feed: React.FC = () => {
 
     return data;
   });
-
-  const [posts, setPosts] = useState<Post[]>(data);
 
   const [searchText, setSearchText] = useState<string>('');
 
