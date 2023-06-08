@@ -11,7 +11,7 @@ const Feed: React.FC = () => {
     data: posts = [],
     error,
     isValidating,
-  } = useSWR('/api/prompt', async(url) => {
+  } = useSWR('/api/posts', async(url) => {
     const response = await fetch(url);
     const data: Post[] = await response.json();
 
@@ -45,7 +45,7 @@ const Feed: React.FC = () => {
         <PromptCardListSkeleton />
       )}
 
-      {posts && (
+      {filteredPosts && (
         <PromptCardList
           posts={filteredPosts}
           handleTagClick={() => {}}
