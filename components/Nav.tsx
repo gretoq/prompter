@@ -12,77 +12,84 @@ import {
   ClientSafeProvider,
 } from 'next-auth/react';
 import { BuiltInProviderType } from 'next-auth/providers';
+import { NavDropdown } from './NavDropdown';
+import { Session } from 'next-auth/core/types';
+import Skeleton from 'react-loading-skeleton';
 
-const Nav: React.FC = () => {
-  const [providers, setProviders]
-    = useState<Record<
-    LiteralUnion<BuiltInProviderType,string>,
-    ClientSafeProvider> | null>(null);
+interface Props {
+  session: Session | null,
+  providers: Record<LiteralUnion<BuiltInProviderType, string>,
+    ClientSafeProvider> | null,
+}
 
+export const NavBar: React.FC<Props> = ({
+  session,
+  providers,
+}) => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
-  const { data: session } = useSession();
+  const isUserLoggedIn = session?.user;
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    const setProvider = async() => {
-      const response = await getProviders();
-
-      setProviders(response);
+    const handleResize = () => {
+      setWindowWidth(() => window.innerWidth);
     };
 
-    setProvider();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
-  const isUserLoggedIn = session?.user;
-
   return (
-    <nav className="flex-between w-full mb-16 pt-3">
-      <Link href="/" className="flex gap-2 flex-center">
-        <Image
-          src="/assets/images/logo.svg"
-          alt="Promter logo"
-          width={30}
-          height={30}
-          className="object-containe"
-        />
-
-        <p className="logo_text">
-          Prompter
-        </p>
-      </Link>
-
-      {/* desktop nav */}
-      <div className="sm:flex hidden">
+    <div>
+      <div className="sm:flex relative">
         {isUserLoggedIn ? (
           <div className="flex gap-3 md:gap-5">
             <Link
               href="/create-prompt"
-              className="black_btn"
+              className="black_btn sm:block hidden"
             >
               Create Post
             </Link>
-
             <button
-              className="outline_btn"
+              className="outline_btn sm:block hidden"
               type="button"
               onClick={() => signOut()}
             >
               Sign Out
             </button>
 
-            <Link href="/profile">
+            {windowWidth > 640 ? (
+              <Link href="/profile" className="pointer-events-none sm:pointer-events-auto">
+                <Image
+                  className="rounded-full"
+                  src={session.user.image || ''}
+                  width={37}
+                  height={37}
+                  alt="profile"
+                />
+              </Link>
+            ) : (
               <Image
                 className="rounded-full"
-                src={session?.user?.image || ''}
+                src={session.user.image || ''}
                 width={37}
                 height={37}
                 alt="profile"
+                onClick={() => setToggleDropdown(prev => !prev)}
               />
-            </Link>
+            )}
+
+            {toggleDropdown && (
+              <NavDropdown onToggleClick={setToggleDropdown} />
+            )}
           </div>
         ) : (
           <>
             {providers && (
-              <div  className="flex gap-8">
+              <div className="flex gap-2 sm:gap-8">
                 {Object.values(providers).map(({ name, id }) => (
                   <button
                     className="black_btn"
@@ -98,67 +105,63 @@ const Nav: React.FC = () => {
           </>
         )}
       </div>
+    </div>
+  );
+};
 
-      {/* mob nav */}
-      <div className="sm:hidden flex relative">
-        {isUserLoggedIn ? (
-          <div className="flex">
-            <Image
-              className="rounded-full"
-              src={session?.user?.image || ''}
-              width={37}
-              height={37}
-              alt="profile"
-              onClick={() => setToggleDropdown(prev => !prev)}
-            />
+const Nav: React.FC = () => {
+  const [providers, setProviders]
+    = useState<Record<
+    LiteralUnion<BuiltInProviderType, string>,
+    ClientSafeProvider> | null>(null);
 
-            {toggleDropdown && (
-              <div className="dropdown">
-                <Link
-                  className='dropdown_link'
-                  href="/profile"
-                  onClick={() => setToggleDropdown(false)}
-                >
-                  My Profile
-                </Link>
+  const { data: session } = useSession();
+  const [isProviderLoaded, setIsProviderLoaded] = useState(false);
 
-                <Link
-                  className='dropdown_link'
-                  href="/create-prompt"
-                  onClick={() => setToggleDropdown(false)}
-                >
-                  Create Prompt
-                </Link>
+  useEffect(() => {
+    const setProvider = async() => {
+      try {
+        const response = await getProviders();
+        setProviders(response);
+        setIsProviderLoaded(true);
+      } catch (error: any) {
+        global.console.log('Failed to get providers!');
+      } finally {
+      }
 
-                <button
-                  className="mt-5 w-full black_btn"
-                  type="button"
-                  onClick={() => {
-                    setToggleDropdown(false);
-                    signOut();
-                  }}
-                >
-                  Sign Out
-                </button>
-              </div>
-            )}
-          </div>
-        ) : (
-          <>
-            {providers && Object.values(providers)
-              .map(({ id, name }) => (
-                <button
-                  className="black_btn"
-                  key={name}
-                  type="button"
-                  onClick={() => signIn(id)}
-                >
-                  Sign In
-                </button>
-              ))}
-          </>
-        )}
-      </div>
+    };
+
+    setProvider();
+  }, []);
+
+  return (
+    <nav className="flex-between w-full mb-16 pt-3 h-9">
+      <Link href="/" className="flex gap-2 flex-center">
+        <Image
+          src="/assets/images/logo.svg"
+          alt="Promter logo"
+          width={30}
+          height={30}
+          className="object-containe"
+        />
+        <p className="logo_text">
+          Prompter
+        </p>
+      </Link>
+
+      {!isProviderLoaded && (
+        <Skeleton
+          width={200}
+          height={37}
+        />
+      )}
+
+      {isProviderLoaded && (
+        <NavBar
+          session={session}
+          providers={providers}
+        />
+      )}
     </nav>
   );
 };

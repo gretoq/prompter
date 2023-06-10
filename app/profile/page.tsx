@@ -55,10 +55,8 @@ const ProfilePage: React.FC = () => {
     }
 
     try {
-      await fetch(
-        `/api/posts/${post._id}`,
-        { method: 'DELETE' }
-      );
+      // await fetch(`/api/posts/${post._id}`, { method: 'DELETE' });
+      await fetch(`/api/posts/${post._id}`, { method: 'DELETE' });
 
       // setPosts(prev => {
       //   const filteredPosts = prev.filter(prevPost => post._id !== prevPost._id);
@@ -67,6 +65,7 @@ const ProfilePage: React.FC = () => {
       // });
 
       // router.push('/profile');
+
     } catch (error: any) {
       global.console.log('Faild to remove a prompt: ', error.message);
     }

@@ -28,7 +28,7 @@ const EditPrompt: React.FC = () => {
 
     try {
       const response = await fetch(
-        `/api/prompt/${postId}`,
+        `/api/posts/${postId}`,
         {
           method: 'PATCH',
           body: JSON.stringify({
