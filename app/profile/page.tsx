@@ -18,6 +18,10 @@ const ProfilePage: React.FC = () => {
   const userId = session?.user.id;
   const router = useRouter();
 
+  if (!userId) {
+    router.push('/');
+  }
+
   const {
     data: posts = [],
     isValidating,
