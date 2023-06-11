@@ -26,6 +26,14 @@ export const createPost = async(
   }
 };
 
+export const getPostsByUserId = async(url: string) => {
+  try {
+    return await (await fetch(url)).json();
+  } catch (error: any) {
+    throw new Error(error.message, error);
+  }
+};
+
 export const removePost = async(postId: string, userId: string) => {
   try {
     const fetcher = await fetch(`/api/posts/${postId}`, { method: 'DELETE' });
@@ -34,10 +42,7 @@ export const removePost = async(postId: string, userId: string) => {
       throw new Error('Failed to remove the post!');
     }
 
-    const response = await fetch(`/api/users/${userId}/posts`);
-    const data = await response.json();
-
-    return data;
+    return getPostsByUserId(`/api/users/${userId}/posts`);
   } catch (error: any) {
     throw new Error(error.message, error);
   }
