@@ -10,18 +10,19 @@ import useSWR from 'swr';
 import Profile from '@components/Profile';
 import PromptCardListSkeleton from '@components/Skeletons/PromptCardListSkeleton';
 
-import { getPostsByUserId, removePost } from '@utils/fetching/post';
+import { removePost } from '@utils/fetching/post';
 import { Post } from '../../types/Post';
 
 const ProfilePage: React.FC = () => {
   const { data: session } = useSession();
+  const userId = session?.user.id;
   const router = useRouter();
 
   const {
     data: posts = [],
     isValidating,
     mutate,
-  } = useSWR<Post[]>(getPostsByUserId(`${session?.user.id}`));
+  } = useSWR<Post[]>(`/api/users/${userId}/posts`);
 
   const handleEdit = (post: Post) => {
     router.push(`/update-prompt?id=${post._id}`);

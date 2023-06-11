@@ -26,22 +26,6 @@ export const createPost = async(
   }
 };
 
-export const getPostsByUserId = async(userId: string) => {
-  try {
-    const response = await fetch(`/api/users/${userId}/posts`);
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch all posts for a user!');
-    }
-
-    const data = await response.json();
-
-    return data;
-  } catch (error: any) {
-    throw new Error(error.message, error);
-  }
-};
-
 export const removePost = async(postId: string, userId: string) => {
   try {
     const fetcher = await fetch(`/api/posts/${postId}`, { method: 'DELETE' });
