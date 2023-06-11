@@ -5,7 +5,7 @@ import Image from 'next/image';
 import {
   signIn,
   signOut, LiteralUnion,
-  ClientSafeProvider
+  ClientSafeProvider,
 } from 'next-auth/react';
 import { BuiltInProviderType } from 'next-auth/providers';
 import { NavDropdown } from './NavDropdown';
