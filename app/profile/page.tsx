@@ -1,12 +1,17 @@
 'use client';
 
-import Profile from '@components/Profile';
-import { Post } from '../../types/Post';
+import React from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+
 import { useSession } from 'next-auth/react';
-import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useSWR from 'swr';
+
+import Profile from '@components/Profile';
 import PromptCardListSkeleton from '@components/Skeletons/PromptCardListSkeleton';
+
+import { getPostsByUserId, removePost } from '@utils/fetching/post';
+import { Post } from '../../types/Post';
 
 const ProfilePage: React.FC = () => {
   const { data: session } = useSession();
@@ -14,33 +19,9 @@ const ProfilePage: React.FC = () => {
 
   const {
     data: posts = [],
-    error,
     isValidating,
-  } = useSWR(
-    `/api/users/${session?.user.id}/posts`,
-    async(url) => {
-      const response = await fetch(url);
-      const data = await response.json();
-
-      return data;
-    }
-  );
-  // const [posts, setPosts] = useState<Post[]>(data);
-
-  // useEffect(() => {
-  //   const fetchPosts = async() => {
-  //     const response = await fetch(
-  //       `/api/users/${session?.user.id}/posts`,
-  //     );
-  //     const data = await response.json();
-
-  //     setPosts(data);
-  //   };
-
-  //   if (session?.user.id) {
-  //     fetchPosts();
-  //   }
-  // }, [session?.user.id]);
+    mutate,
+  } = useSWR<Post[]>(getPostsByUserId(`${session?.user.id}`));
 
   const handleEdit = (post: Post) => {
     router.push(`/update-prompt?id=${post._id}`);
@@ -54,25 +35,31 @@ const ProfilePage: React.FC = () => {
       return;
     }
 
+    if (!session) {
+      toast.error('Failed to find user id.');
+      return;
+    }
+
+    const postsWithoutDeletedPost = posts.filter(p => post._id !== p._id);
+
     try {
-      // await fetch(`/api/posts/${post._id}`, { method: 'DELETE' });
-      await fetch(`/api/posts/${post._id}`, { method: 'DELETE' });
+      await mutate(removePost(post._id, session.user.id), {
+        optimisticData: postsWithoutDeletedPost,
+        rollbackOnError: true,
+        populateCache: true,
+        revalidate: false,
+      });
 
-      // setPosts(prev => {
-      //   const filteredPosts = prev.filter(prevPost => post._id !== prevPost._id);
-
-      //   return filteredPosts;
-      // });
-
-      // router.push('/profile');
-
+      toast.success('Successfully deleted the post.');
     } catch (error: any) {
-      global.console.log('Faild to remove a prompt: ', error.message);
+      toast.error('Failed to delete the post.');
     }
   };
 
   return (
     <>
+      <Toaster toastOptions={{ position: 'bottom-center' }} />
+
       {isValidating && (
         <section className="w-full">
           <h1 className="head_text text-left">

@@ -11,11 +11,9 @@ const Feed: React.FC = () => {
     data: posts = [],
     error,
     isValidating,
-  } = useSWR('/api/posts', async(url) => {
-    const response = await fetch(url, {
-      next: { revalidate: 10 },
-    });
-    const data: Post[] = await response.json();
+  } = useSWR<Post[]>('/api/posts', async(url) => {
+    const response = await fetch(url);
+    const data = await response.json();
 
     return data;
   });
