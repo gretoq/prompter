@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-
 import useSWR from 'swr';
+import toast, { Toaster } from 'react-hot-toast';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import Form from '@components/Form';
 import FormSkeleton from '@components/Skeletons/FormSkeleton';
+
 import { getPostById, updatePost } from '@utils/fetching/post';
-import toast, { Toaster } from 'react-hot-toast';
 
 const EditPrompt: React.FC = () => {
   const router = useRouter();

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 interface Props {
   post: Post,
@@ -35,19 +36,23 @@ const PromptCard: React.FC<Props> = ({
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-5">
-        <div
-          className="
-            flex-1 flex justify-start items-center
-            gap-3 cursor-pointer
-          "
-        >
-          <Image
-            src={post?.creator?.image}
-            alt="user-image"
-            width={40}
-            height={40}
-            className="rounded-full object-contain"
-          />
+        <div className="flex-1 flex justify-start items-center gap-3">
+          <Link
+            href={
+              session?.user.id === post.creator._id
+                ? '/profile'
+                : `profile/${post?.creator?._id}`
+            }
+            className="min-w-fit"
+          >
+            <Image
+              src={post?.creator?.image}
+              alt="user-image"
+              width={40}
+              height={40}
+              className="rounded-full object-contain"
+            />
+          </Link>
 
           <div className="flex flex-col">
             <h3 className="font-satoshi font-semibold text-gray-900">

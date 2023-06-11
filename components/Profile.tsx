@@ -6,8 +6,8 @@ interface Props {
   name: string,
   desc: string,
   myPosts: Post[],
-  onEdit: (post: Post) => void,
-  onDelete: (post: Post) => void,
+  onEdit?: (post: Post) => void,
+  onDelete?: (post: Post) => void,
 }
 
 const Profile: React.FC<Props> = ({
