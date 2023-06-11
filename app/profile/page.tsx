@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 import { useSession } from 'next-auth/react';
@@ -18,9 +18,12 @@ const ProfilePage: React.FC = () => {
   const userId = session?.user.id;
   const router = useRouter();
 
-  if (!userId) {
-    router.push('/');
-  }
+  useEffect(() => {
+    if (!session) {
+      router.push('/');
+    }
+
+  }, [session, router]);
 
   const {
     data: posts = [],
