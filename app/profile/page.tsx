@@ -10,7 +10,7 @@ import useSWR from 'swr';
 import Profile from '@components/Profile';
 import PromptCardListSkeleton from '@components/Skeletons/PromptCardListSkeleton';
 
-import { getPostsByUserId, removePost } from '@utils/fetching/post';
+import { getPosts, removePost } from '@utils/fetching/post';
 import { Post } from '../../types/Post';
 
 const ProfilePage: React.FC = () => {
@@ -29,7 +29,7 @@ const ProfilePage: React.FC = () => {
     data: posts = [],
     isValidating,
     mutate,
-  } = useSWR<Post[]>(`/api/users/${userId}/posts`, getPostsByUserId);
+  } = useSWR<Post[]>(`/api/users/${userId}/posts`, getPosts);
 
   const handleEdit = (post: Post) => {
     router.push(`/update-prompt?id=${post._id}`);

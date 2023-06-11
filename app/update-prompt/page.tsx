@@ -7,48 +7,55 @@ import useSWR from 'swr';
 
 import Form from '@components/Form';
 import FormSkeleton from '@components/Skeletons/FormSkeleton';
+import { getPostById, updatePost } from '@utils/fetching/post';
+import toast, { Toaster } from 'react-hot-toast';
 
 const EditPrompt: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const postId = searchParams.get('id');
   const [submitting, setSubmitting] = useState<boolean>(false);
-  const { data: post, error, isValidating } = useSWR(`/api/posts/${postId}`, async (url) => {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-  });
+  const {
+    data: post,
+    error,
+    isValidating,
+    mutate,
+  } = useSWR(`/api/posts/${postId}`, getPostById);
 
   const updatePrompt = async(prompt: string, tag: string) => {
     setSubmitting(true);
 
     if (!postId) {
-      return alert('Prompt ID not found!');
+      toast.error('Failed to find postId!');
+
+      return;
     }
 
     try {
-      const response = await fetch(
-        `/api/posts/${postId}`,
-        {
-          method: 'PATCH',
-          body: JSON.stringify({
-            prompt,
-            tag,
-          }),
-        }
-      );
+      const updatedPost = { ...post, prompt, tag};
 
-      if (response.ok) {
+      await mutate(updatePost(postId, prompt, tag), {
+        optimisticData: updatedPost,
+        rollbackOnError: true,
+        populateCache: true,
+        revalidate: false,
+      });
+
+      if (updatedPost) {
+        toast.success('Successfully updated the post!');
         router.push('/profile');
       }
 
     } catch (error: any) {
-      global.console.log('Failed to update a post!', error.message);
+      toast.error('Failed to update a post!');
+      router.push('/profile');
     }
   };
 
   return (
     <>
+      <Toaster toastOptions={{ position: 'bottom-center' }} />
+
       {post && (
         <Form
           type="Edit"

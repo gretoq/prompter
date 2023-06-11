@@ -108,7 +108,11 @@ const Form: React.FC<Props> = ({
 
         <div className="flex-end mx-3 mb-5 gap-4">
           <Link
-            href="/"
+            href={
+              type === 'Edit'
+                ? '/profile'
+                : '/'
+            }
             className="text-gray-500 text-sm"
           >
             Cancel

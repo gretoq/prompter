@@ -5,18 +5,14 @@ import { Post } from '../types/Post';
 import React, { ChangeEvent, useState } from 'react';
 import PromptCardListSkeleton from './Skeletons/PromptCardListSkeleton';
 import PromptCardList from './PromptCardList';
+import { getPosts } from '@utils/fetching/post';
 
 const Feed: React.FC = () => {
   const {
     data: posts = [],
     error,
     isValidating,
-  } = useSWR<Post[]>('/api/posts', async(url) => {
-    const response = await fetch(url);
-    const data = await response.json();
-
-    return data;
-  });
+  } = useSWR<Post[]>('/api/posts', getPosts);
 
   const [searchText, setSearchText] = useState<string>('');
 

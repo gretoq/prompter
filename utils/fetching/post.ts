@@ -1,3 +1,19 @@
+export const getPosts = async(url: string) => {
+  try {
+    return await (await fetch(url)).json();
+  } catch (error: any) {
+    throw new Error(error.message, error);
+  }
+};
+
+export const getPostById = async(url: string) => {
+  try {
+    return await (await fetch(url)).json();
+  } catch (error: any) {
+    throw new Error(error.message, error);
+  }
+};
+
 export const createPost = async(
   userId: string,
   prompt: string,
@@ -26,9 +42,28 @@ export const createPost = async(
   }
 };
 
-export const getPostsByUserId = async(url: string) => {
+export const updatePost = async(
+  postId: string,
+  prompt:string,
+  tag: string,
+) => {
   try {
-    return await (await fetch(url)).json();
+    const response = await fetch(
+      `/api/posts/${postId}`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({
+          prompt,
+          tag,
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to update the post!');
+    }
+
+    return await getPostById(`/api/posts/${postId}`);
   } catch (error: any) {
     throw new Error(error.message, error);
   }
@@ -42,7 +77,7 @@ export const removePost = async(postId: string, userId: string) => {
       throw new Error('Failed to remove the post!');
     }
 
-    return getPostsByUserId(`/api/users/${userId}/posts`);
+    return getPosts(`/api/users/${userId}/posts`);
   } catch (error: any) {
     throw new Error(error.message, error);
   }

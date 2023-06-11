@@ -1,27 +1,30 @@
 'use client';
+
 import React, { useState, useEffect } from 'react';
+import { BuiltInProviderType } from 'next-auth/providers';
+import { Session } from 'next-auth/core/types';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
   signIn,
-  signOut, LiteralUnion,
+  signOut,
+  LiteralUnion,
   ClientSafeProvider,
 } from 'next-auth/react';
-import { BuiltInProviderType } from 'next-auth/providers';
+
 import { NavDropdown } from './NavDropdown';
-import { Session } from 'next-auth/core/types';
 
 interface Props {
   session: Session | null;
-  providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null;
+  providers: Record<LiteralUnion<BuiltInProviderType, string>,
+    ClientSafeProvider> | null;
 }
 
-export const NavBar: React.FC<Props> = ({
-  session, providers,
-}) => {
+export const NavBar: React.FC<Props> = ({ session, providers }) => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
-  const isUserLoggedIn = session?.user;
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const isUserLoggedIn = session?.user;
 
   useEffect(() => {
     const handleResize = () => {
