@@ -12,7 +12,6 @@ import Form from '@components/Form';
 import { createPost } from '@utils/fetching/post';
 import { ROUTE_PROFILE } from '@utils/constants/routes';
 import { FormType } from '../../types/FormType';
-import Head from 'next/head';
 
 const CreatePrompt: React.FC = () => {
   const router = useRouter();
