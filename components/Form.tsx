@@ -2,9 +2,11 @@
 
 import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
+import { FormType } from '../types/FormType';
+import { ROUTE_HOME, ROUTE_PROFILE } from '@utils/constants/routes';
 
 interface Props {
-  type: string,
+  type: FormType,
   prompt?: string,
   tag?: string,
   submitting: boolean,
@@ -47,7 +49,6 @@ const Form: React.FC<Props> = ({
 
     if (promptValue === prompt && tagValue === tag) {
       alert('You haven`t no changes!');
-
       return;
     }
 
@@ -109,9 +110,9 @@ const Form: React.FC<Props> = ({
         <div className="flex-end mx-3 mb-5 gap-4">
           <Link
             href={
-              type === 'Edit'
-                ? '/profile'
-                : '/'
+              type === FormType.EDIT
+                ? ROUTE_PROFILE
+                : ROUTE_HOME
             }
             className="text-gray-500 text-sm"
           >

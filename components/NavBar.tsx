@@ -13,6 +13,7 @@ import {
 } from 'next-auth/react';
 
 import { NavDropdown } from './NavDropdown';
+import { ROUTE_CREATE, ROUTE_PROFILE } from '@utils/constants/routes';
 
 interface Props {
   session: Session | null;
@@ -44,7 +45,7 @@ export const NavBar: React.FC<Props> = ({ session, providers }) => {
         {isUserLoggedIn ? (
           <div className="flex gap-3 md:gap-5">
             <Link
-              href="/create-prompt"
+              href={ROUTE_CREATE}
               className="black_btn sm:block hidden"
             >
               Create Post
@@ -58,7 +59,7 @@ export const NavBar: React.FC<Props> = ({ session, providers }) => {
             </button>
 
             {windowWidth > 640 ? (
-              <Link href="/profile" className="pointer-events-none sm:pointer-events-auto">
+              <Link href={ROUTE_PROFILE}>
                 <Image
                   className="rounded-full"
                   src={session.user.image || ''}

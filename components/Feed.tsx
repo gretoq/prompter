@@ -1,18 +1,21 @@
 'use client';
 
-import useSWR from 'swr';
-import { Post } from '../types/Post';
 import React, { ChangeEvent, useState } from 'react';
-import PromptCardListSkeleton from './Skeletons/PromptCardListSkeleton';
+import useSWR from 'swr';
+
 import PromptCardList from './PromptCardList';
+import PromptCardListSkeleton from './Skeletons/PromptCardListSkeleton';
+
+import { Post } from '../types/Post';
 import { getPosts } from '@utils/fetching/post';
+import { ENDPOINT_POSTS } from '@utils/constants/endpoints';
 
 const Feed: React.FC = () => {
   const {
     data: posts = [],
     error,
     isValidating,
-  } = useSWR<Post[]>('/api/posts', getPosts);
+  } = useSWR<Post[]>(ENDPOINT_POSTS, getPosts);
 
   const [searchText, setSearchText] = useState<string>('');
 

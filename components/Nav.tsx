@@ -10,8 +10,10 @@ import {
   ClientSafeProvider,
 } from 'next-auth/react';
 import { BuiltInProviderType } from 'next-auth/providers';
+
 import Skeleton from 'react-loading-skeleton';
 import { NavBar } from './NavBar';
+import { ROUTE_HOME } from '@utils/constants/routes';
 
 const Nav: React.FC = () => {
   const [providers, setProviders]
@@ -37,7 +39,7 @@ const Nav: React.FC = () => {
 
   return (
     <nav className="flex-between w-full mb-16 pt-3 h-9">
-      <Link href="/" className="flex gap-2 flex-center">
+      <Link href={ROUTE_HOME} className="flex gap-2 flex-center">
         <Image
           src="/assets/images/logo.svg"
           alt="Promter logo"

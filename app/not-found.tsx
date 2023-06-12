@@ -1,3 +1,4 @@
+import { ROUTE_HOME } from '@utils/constants/routes';
 import Link from 'next/link';
 import React from 'react';
 
@@ -11,7 +12,7 @@ const NotFoundPage: React.FC = () => (
       Please go to Home Page
     </span>
 
-    <Link href="/" className="black_btn">
+    <Link href={ROUTE_HOME} className="black_btn">
       Go Home
     </Link>
   </section>

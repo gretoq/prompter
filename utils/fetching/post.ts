@@ -1,12 +1,6 @@
-export const getPosts = async(url: string) => {
-  try {
-    return await (await fetch(url)).json();
-  } catch (error: any) {
-    throw new Error(error.message, error);
-  }
-};
+import { ENDPOINT_POSTS } from '@utils/constants/endpoints';
 
-export const getPostById = async(url: string) => {
+export const getPosts = async(url: string) => {
   try {
     return await (await fetch(url)).json();
   } catch (error: any) {
@@ -21,7 +15,7 @@ export const createPost = async(
 ) => {
   try {
     const response = await await fetch(
-      '/api/posts/new',
+      `${ENDPOINT_POSTS}new`,
       {
         method: 'POST',
         body: JSON.stringify({
@@ -49,7 +43,7 @@ export const updatePost = async(
 ) => {
   try {
     const response = await fetch(
-      `/api/posts/${postId}`,
+      `${ENDPOINT_POSTS}${postId}`,
       {
         method: 'PATCH',
         body: JSON.stringify({
@@ -63,7 +57,7 @@ export const updatePost = async(
       throw new Error('Failed to update the post!');
     }
 
-    return await getPostById(`/api/posts/${postId}`);
+    return await getPosts(`${ENDPOINT_POSTS}${postId}`);
   } catch (error: any) {
     throw new Error(error.message, error);
   }
@@ -71,13 +65,13 @@ export const updatePost = async(
 
 export const removePost = async(postId: string, userId: string) => {
   try {
-    const fetcher = await fetch(`/api/posts/${postId}`, { method: 'DELETE' });
+    const fetcher = await fetch(`${ENDPOINT_POSTS}${postId}`, { method: 'DELETE' });
 
     if (!fetcher.ok) {
       throw new Error('Failed to remove the post!');
     }
 
-    return getPosts(`/api/users/${userId}/posts`);
+    return getPosts(`${ENDPOINT_POSTS}${userId}/posts`);
   } catch (error: any) {
     throw new Error(error.message, error);
   }

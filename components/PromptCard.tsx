@@ -1,11 +1,12 @@
 'use client';
 
+import React, { useState } from 'react';
 import { Post } from '../types/Post';
 import Image from 'next/image';
-import React, { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { ROUTE_PROFILE } from '@utils/constants/routes';
 
 interface Props {
   post: Post,
@@ -24,6 +25,9 @@ const PromptCard: React.FC<Props> = ({
   const pathName = usePathname();
   const [copied, setCopied] = useState<string>('');
 
+  const isOwnersProfile = session?.user.id === post?.creator?._id
+    && pathName === ROUTE_PROFILE;
+
   const handleCopy = () => {
     setCopied(post.prompt);
     navigator.clipboard.writeText(post.prompt);
@@ -40,8 +44,8 @@ const PromptCard: React.FC<Props> = ({
           <Link
             href={
               session?.user.id === post.creator._id
-                ? '/profile'
-                : `profile/${post?.creator?._id}`
+                ? ROUTE_PROFILE
+                : `${ROUTE_PROFILE}/${post?.creator?._id}`
             }
             className="min-w-fit"
           >
@@ -70,9 +74,10 @@ const PromptCard: React.FC<Props> = ({
           onClick={handleCopy}
         >
           <Image
-            src={copied === post.prompt
-              ? '/assets/icons/tick.svg'
-              : '/assets/icons/copy.svg'
+            src={
+              copied === post.prompt
+                ? '/assets/icons/tick.svg'
+                : '/assets/icons/copy.svg'
             }
             alt="copy"
             width={12}
@@ -92,7 +97,7 @@ const PromptCard: React.FC<Props> = ({
         {`#${post.tag}`}
       </p>
 
-      {session?.user.id === post?.creator?._id && pathName === '/profile' && (
+      {isOwnersProfile && (
         <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
           <p
             className="font-inter text-sm green_gradient cursor-pointer"

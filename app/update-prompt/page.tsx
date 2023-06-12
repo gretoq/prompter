@@ -8,7 +8,10 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Form from '@components/Form';
 import FormSkeleton from '@components/Skeletons/FormSkeleton';
 
-import { getPostById, updatePost } from '@utils/fetching/post';
+import { getPosts, updatePost } from '@utils/fetching/post';
+import { ENDPOINT_POSTS } from '@utils/constants/endpoints';
+import { ROUTE_PROFILE } from '@utils/constants/routes';
+import { FormType } from '../../types/FormType';
 
 const EditPrompt: React.FC = () => {
   const router = useRouter();
@@ -20,7 +23,7 @@ const EditPrompt: React.FC = () => {
     error,
     isValidating,
     mutate,
-  } = useSWR(`/api/posts/${postId}`, getPostById);
+  } = useSWR(`${ENDPOINT_POSTS}${postId}`, getPosts);
 
   const updatePrompt = async(prompt: string, tag: string) => {
     setSubmitting(true);
@@ -43,12 +46,12 @@ const EditPrompt: React.FC = () => {
 
       if (updatedPost) {
         toast.success('Successfully updated the post!');
-        router.push('/profile');
+        router.push(ROUTE_PROFILE);
       }
 
     } catch (error: any) {
       toast.error('Failed to update a post!');
-      router.push('/profile');
+      router.push(ROUTE_PROFILE);
     }
   };
 
@@ -58,7 +61,7 @@ const EditPrompt: React.FC = () => {
 
       {post && (
         <Form
-          type="Edit"
+          type={FormType.EDIT}
           prompt={post?.prompt}
           tag={post?.tag}
           submitting={submitting}
@@ -67,7 +70,7 @@ const EditPrompt: React.FC = () => {
       )}
 
       {isValidating && (
-        <FormSkeleton type="Edit" />
+        <FormSkeleton type={FormType.EDIT} />
       )}
 
       {error && (

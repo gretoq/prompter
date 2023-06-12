@@ -12,6 +12,8 @@ import PromptCardListSkeleton from '@components/Skeletons/PromptCardListSkeleton
 
 import { getPosts, removePost } from '@utils/fetching/post';
 import { Post } from '../../types/Post';
+import { ROUTE_HOME, ROUTE_UPDATE } from '@utils/constants/routes';
+import { ENDPOINT_USERS } from '@utils/constants/endpoints';
 
 const ProfilePage: React.FC = () => {
   const { data: session } = useSession();
@@ -20,7 +22,7 @@ const ProfilePage: React.FC = () => {
 
   useEffect(() => {
     if (!session) {
-      router.push('/');
+      router.push(ROUTE_HOME);
     }
 
   }, [session, router]);
@@ -29,10 +31,10 @@ const ProfilePage: React.FC = () => {
     data: posts = [],
     isValidating,
     mutate,
-  } = useSWR<Post[]>(`/api/users/${userId}/posts`, getPosts);
+  } = useSWR<Post[]>(`${ENDPOINT_USERS}${userId}/posts`, getPosts);
 
   const handleEdit = (post: Post) => {
-    router.push(`/update-prompt?id=${post._id}`);
+    router.push(`${ROUTE_UPDATE}?id=${post._id}`);
   };
 
   const handleDelete = async(post: Post) => {

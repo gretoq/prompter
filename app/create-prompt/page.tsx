@@ -9,6 +9,8 @@ import { useRouter } from 'next/navigation';
 import Form from '@components/Form';
 
 import { createPost } from '@utils/fetching/post';
+import { ROUTE_PROFILE } from '@utils/constants/routes';
+import { FormType } from '../../types/FormType';
 
 const CreatePrompt: React.FC = () => {
   const router = useRouter();
@@ -32,7 +34,7 @@ const CreatePrompt: React.FC = () => {
       if (response.ok) {
         toast.success('Successfully created the new post!');
 
-        router.push('/profile');
+        router.push(ROUTE_PROFILE);
       }
     } catch (error: any) {
       toast.error('Failed to create a new post!');
@@ -44,7 +46,7 @@ const CreatePrompt: React.FC = () => {
       <Toaster toastOptions={{ position: 'bottom-center' }} />
 
       <Form
-        type="Create"
+        type={FormType.CREATE}
         submitting={submitting}
         onSubmit={handleCreatePrompt}
       />

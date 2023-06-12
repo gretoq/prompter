@@ -19,29 +19,27 @@ const PromptCardList: React.FC<Props> = ({
   handleTagClick,
   onEdit,
   onDelete,
-}) => {
-  return (
-    <div >
-      <TransitionGroup className="mt-16 prompt_layout">
-        {posts.map(post => {
-          return (
-            <CSSTransition
-              key={post._id}
-              timeout={300}
-              classNames="item"
-            >
-              <PromptCard
-                post={post}
-                handleTagClick={handleTagClick}
-                onEdit={onEdit}
-                onDelete={onDelete}
-              />
-            </CSSTransition>
-          );
-        })}
-      </TransitionGroup>
-    </div>
-  );
-};
+}) => (
+  <div >
+    <TransitionGroup className="mt-16 prompt_layout">
+      {posts.map(post => {
+        return (
+          <CSSTransition
+            key={post._id}
+            timeout={300}
+            classNames="item"
+          >
+            <PromptCard
+              post={post}
+              handleTagClick={handleTagClick}
+              onEdit={onEdit}
+              onDelete={onDelete}
+            />
+          </CSSTransition>
+        );
+      })}
+    </TransitionGroup>
+  </div>
+);
 
 export default PromptCardList;

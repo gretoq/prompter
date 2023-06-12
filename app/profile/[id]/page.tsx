@@ -9,10 +9,11 @@ import useSWR from 'swr';
 import Profile from '@components/Profile';
 import PromptCardListSkeleton from '@components/Skeletons/PromptCardListSkeleton';
 
-import { getPosts } from '@utils/fetching/post';
 import { Post } from '../../../types/Post';
-import { getUserById } from '@utils/fetching/user';
 import { User } from '../../../types/User';
+import { getPosts } from '@utils/fetching/post';
+import { getUserById } from '@utils/fetching/user';
+import { ENDPOINT_USERS } from '@utils/constants/endpoints';
 
 const PublicProfilePage: React.FC = () => {
   const { id } = useParams();
@@ -20,7 +21,7 @@ const PublicProfilePage: React.FC = () => {
   const {
     data: creator,
     error: errorCreator,
-  } = useSWR<User>(`/api/users/${id}`, getUserById);
+  } = useSWR<User>(`${ENDPOINT_USERS}${id}`, getUserById);
 
   if (errorCreator) {
     toast.error('Failed to find creator in database!');
@@ -30,7 +31,7 @@ const PublicProfilePage: React.FC = () => {
     data: posts = [],
     isValidating,
     error: errorPosts,
-  } = useSWR<Post[]>(`/api/users/${id}/posts`, getPosts);
+  } = useSWR<Post[]>(`${ENDPOINT_USERS}${id}/posts`, getPosts);
 
   if (errorPosts) {
     toast.error('Failded to find creator`s posts!');

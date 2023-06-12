@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Provider: React.FC<Props> = ({ children }) => (
-  <SessionProvider> {/* session={session} */}
+  <SessionProvider>
     {children}
   </SessionProvider>
 );
