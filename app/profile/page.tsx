@@ -48,11 +48,11 @@ const ProfilePage: React.FC = () => {
       return;
     }
 
-    const postsWithoutDeletedPost = posts.filter(p => post._id !== p._id);
+    const optimisticData = posts.filter(p => post._id !== p._id);
 
     try {
       await mutate(removePost(post._id, session.user.id), {
-        optimisticData: postsWithoutDeletedPost,
+        optimisticData,
         rollbackOnError: true,
         populateCache: true,
         revalidate: false,

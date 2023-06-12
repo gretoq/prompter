@@ -185,6 +185,7 @@ html {
   }
 }
 
+/* CSSTransition styles */
 .item-enter {
   opacity: 0;
 }
