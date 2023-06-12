@@ -4,36 +4,47 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import '@styles/gloabal.css';
 import Nav from '@components/Nav';
 import Provider from '@components/Provider';
+import Head from 'next/head';
 import { Metadata } from 'next';
 
 export const metadata: Metadata= {
   title: 'Prompter',
   description: 'Discover & Share AI Prompts',
-  icons: '/favicon.ico',
+  // icons: '/favicon.ico',
 };
 
 interface Props {
   children: ReactNode,
 }
 
-const RootLayout: React.FC<Props> = ({ children }) => (
-  <html lang="en">
-    <body>
-      <Provider>
-        <div className="main">
-          <div className="gradient"></div>
-        </div>
+const RootLayout: React.FC<Props> = ({ children }) => {
 
-        <main className="app">
-          <Nav />
+  return (
+    <html lang="en">
+      <head>
+        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+        <link rel="manifest" href="/site.webmanifest"/>
+      </head>
+      <body>
+        <Provider>
+          <div className="main">
+            <div className="gradient"></div>
+          </div>
 
-          <SkeletonTheme baseColor="#202020" highlightColor="#444">
-            {children}
-          </SkeletonTheme>
-        </main>
-      </Provider>
-    </body>
-  </html>
-);
+          <main className="app">
+            <Nav />
+
+            <SkeletonTheme baseColor="#202020" highlightColor="#444">
+              {children}
+            </SkeletonTheme>
+          </main>
+        </Provider>
+      </body>
+    </html>
+  );
+};
 
 export default RootLayout;
