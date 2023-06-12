@@ -51,7 +51,7 @@ const Feed: React.FC = () => {
         />
       )}
 
-      {error && (
+      {error && !posts && (
         <p>Here must be in future error message for a user</p>
       )}
     </section>

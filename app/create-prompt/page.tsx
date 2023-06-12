@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { NextSeo } from 'next-seo';
 
 import Form from '@components/Form';
 
@@ -43,11 +44,11 @@ const CreatePrompt: React.FC = () => {
   };
 
   return (
-    <div>
-      <Head>
-        <title>Create Your Prompt | Prompter</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
+    <>
+      <NextSeo
+        title="About Us, or just any title that you wish"
+        description="Then with a short description here."
+      />
 
       <Toaster toastOptions={{ position: 'bottom-center' }} />
 
@@ -56,7 +57,7 @@ const CreatePrompt: React.FC = () => {
         submitting={submitting}
         onSubmit={handleCreatePrompt}
       />
-    </div>
+    </>
   );
 };
 
