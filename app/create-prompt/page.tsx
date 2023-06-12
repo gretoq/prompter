@@ -11,6 +11,7 @@ import Form from '@components/Form';
 import { createPost } from '@utils/fetching/post';
 import { ROUTE_PROFILE } from '@utils/constants/routes';
 import { FormType } from '../../types/FormType';
+import Head from 'next/head';
 
 const CreatePrompt: React.FC = () => {
   const router = useRouter();
@@ -42,7 +43,12 @@ const CreatePrompt: React.FC = () => {
   };
 
   return (
-    <>
+    <div>
+      <Head>
+        <title>Create Your Prompt | Prompter</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+
       <Toaster toastOptions={{ position: 'bottom-center' }} />
 
       <Form
@@ -50,7 +56,7 @@ const CreatePrompt: React.FC = () => {
         submitting={submitting}
         onSubmit={handleCreatePrompt}
       />
-    </>
+    </div>
   );
 };
 

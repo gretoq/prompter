@@ -1,4 +1,4 @@
-import { ENDPOINT_POSTS } from '@utils/constants/endpoints';
+import { ENDPOINT_POSTS, ENDPOINT_USERS } from '@utils/constants/endpoints';
 
 export const getPosts = async(url: string) => {
   try {
@@ -71,7 +71,7 @@ export const removePost = async(postId: string, userId: string) => {
       throw new Error('Failed to remove the post!');
     }
 
-    return getPosts(`${ENDPOINT_POSTS}${userId}/posts`);
+    return getPosts(`${ENDPOINT_USERS}${userId}/posts`);
   } catch (error: any) {
     throw new Error(error.message, error);
   }
