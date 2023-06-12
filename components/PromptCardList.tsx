@@ -28,18 +28,7 @@ const PromptCardList: React.FC<Props> = ({
             <CSSTransition
               key={post._id}
               timeout={300}
-              // classNames="item"
-              classNames={{
-                // appear: 'your tailwindcss codes',
-                // appearActive: 'your tailwindcss codes',
-                // appearDone: 'your tailwindcss codes',
-                enter: 'opacity-0',
-                enterActive: 'opacity-100 transition-opacity easy-in duration-500',
-                // enterDone: 'your tailwindcss codes',
-                exit: 'opacity-100',
-                exitActive: 'opacity-0 transition-opacity easy-in duration-500',
-                // exitDone: 'your tailwindcss codes',
-              }}
+              classNames="item"
             >
               <PromptCard
                 post={post}

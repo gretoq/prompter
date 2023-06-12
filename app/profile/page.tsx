@@ -68,7 +68,7 @@ const ProfilePage: React.FC = () => {
     <>
       <Toaster toastOptions={{ position: 'bottom-center' }} />
 
-      {isValidating && (
+      {isValidating && !posts && (
         <section className="w-full">
           <h1 className="head_text text-left">
             <span className="blue_gradient">
