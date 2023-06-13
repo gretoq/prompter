@@ -1,6 +1,6 @@
 # AI Request Exchange Web Application [Prompter - demo link](https://prompter-gretoq.vercel.app/)
 
-This is a web application that allows users to exchange requests with an AI. It is built using modern technologies such as Next.js, Next App Router, Next Auth, Tailwind CSS, MongoDB, Mongoose, React Hot Toast, React Skeleton, SWR, and React CSSTransition.
+This is a web application that allows users to exchange requests with an AI. It is built using modern technologies such as Next.js, TypeScript, Next App Router, Next Auth, Tailwind CSS, MongoDB, Mongoose, React Hot Toast, React Skeleton, SWR, and React CSSTransition.
 
 ## Features
 
@@ -13,6 +13,7 @@ This is a web application that allows users to exchange requests with an AI. It 
 ## Technologies Used
 
 - **Next.js:** A React framework for building server-side rendered and static websites.
+- **TypeScript:** A statically typed superset of JavaScript.
 - **Next App Router:** A routing library for Next.js applications.
 - **Next Auth:** An authentication library for Next.js applications.
 - **Tailwind CSS:** A utility-first CSS framework for quickly building custom designs.
@@ -79,5 +80,5 @@ Contributions are welcome! If you have any ideas, suggestions, or bug reports, p
 
 ## Acknowledgments
 
-- The developers of Next.js, Tailwind CSS, MongoDB, Mongoose React Skeleton, React Hot Toast, SWR, and React CSSTransition for providing excellent tools and libraries for web development.
+- The developers of Next.js, TypeScript, Tailwind CSS, MongoDB, Mongoose React Skeleton, React Hot Toast, SWR, and React CSSTransition for providing excellent tools and libraries for web development.
 - The open-source community for their contributions and support.
